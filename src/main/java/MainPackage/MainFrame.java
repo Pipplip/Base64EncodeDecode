@@ -18,9 +18,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 public class MainFrame extends JFrame implements ActionListener, View {
 	
 	private final static String VERSION_NUMBER = "v.0.2";
+	
+	public static final Logger logger = LogManager.getLogger(MainFrame.class);  
 
 	private JPanel contentPane;
 	private JFileChooser fileChooser;
@@ -37,14 +43,20 @@ public class MainFrame extends JFrame implements ActionListener, View {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				
+				// basic log4j configurator  
+				BasicConfigurator.configure();  
+				String infoText = "Start Application: Base64 Encode - Decode (" + VERSION_NUMBER +")";
+				logger.info(infoText);
+				
 				try {
 					MainFrame frame = new MainFrame();
-					frame.setTitle("Base64 Encode - Decode (" + VERSION_NUMBER +")");
+					frame.setTitle(infoText);
 					frame.setResizable(false);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -117,6 +129,7 @@ public class MainFrame extends JFrame implements ActionListener, View {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.btn_fileChooser){
+			logger.info("User clicked: FileChooser");
 			fileChooser.setCurrentDirectory(new java.io.File("."));
 			fileChooser.setDialogTitle("Choose file...");
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -126,8 +139,8 @@ public class MainFrame extends JFrame implements ActionListener, View {
 			fileChooser.setAcceptAllFileFilterUsed(false);
 		    //    
 		    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
-		      System.out.println("getCurrentDirectory(): " + fileChooser.getCurrentDirectory());
-		      System.out.println("getSelectedFile() : " +  fileChooser.getSelectedFile());
+		      logger.info("getCurrentDirectory(): " + fileChooser.getCurrentDirectory());
+		      logger.info("getSelectedFile() : " +  fileChooser.getSelectedFile());
 		      
 		      String fileName = ""+fileChooser.getSelectedFile();
 		      lblFileName.setText(fileName);
@@ -145,6 +158,7 @@ public class MainFrame extends JFrame implements ActionListener, View {
 		      }
 		    }
 		}else if(e.getSource() == this.btn_convert){
+			logger.info("User clicked: Convert Button");
 			File file = new File(""+fileChooser.getSelectedFile());
 			  if(file.exists()){
 				  Convert convertion = new Convert(file, chckbxImageForWeb.isSelected());
@@ -155,6 +169,7 @@ public class MainFrame extends JFrame implements ActionListener, View {
 				  btn_clipboard.setEnabled(true);
 			  }
 		}else if(e.getSource() == this.btn_clipboard){
+			logger.info("User clicked: Copy to clipboard Button");
 			StringSelection selection = new StringSelection(textArea.getText());
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clipboard.setContents(selection, selection);
@@ -162,6 +177,7 @@ public class MainFrame extends JFrame implements ActionListener, View {
 			btn_clipboard.setBackground(Color.GREEN);
 			btn_convert.setEnabled(true);
 		}else if(e.getSource() == this.chckbxImageForWeb){
+			logger.info("User clicked: checkbox Image for web ("+chckbxImageForWeb.isSelected()+")");
 			if(chckbxImageForWeb.isSelected()){
 				chckbxImageForWeb.setSelected(true);
 			}else{

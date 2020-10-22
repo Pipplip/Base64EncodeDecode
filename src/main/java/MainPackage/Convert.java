@@ -30,7 +30,7 @@ public class Convert extends Thread{
 	        InputStream iSteamReader = new FileInputStream(imageFile);
 	        byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
 	        base64 = Base64.getEncoder().encodeToString(imageBytes);
-	        System.out.println(base64);
+	        MainFrame.logger.info("Convert Result is: "+base64);
 	        this.result = base64;
 	        if(this.imageForWeb){
 	        	notify("data:image/png;base64,"+ this.result);
@@ -38,7 +38,7 @@ public class Convert extends Thread{
 	        	notify(this.result);
 	        }
 	    }catch(Exception e){
-	        e.printStackTrace();
+	    	MainFrame.logger.error(e);
 	    }
 	}
 	
