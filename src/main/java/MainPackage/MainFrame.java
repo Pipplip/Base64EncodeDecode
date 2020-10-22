@@ -19,6 +19,8 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 public class MainFrame extends JFrame implements ActionListener, View {
+	
+	private final static String VERSION_NUMBER = "v.0.2";
 
 	private JPanel contentPane;
 	private JFileChooser fileChooser;
@@ -37,8 +39,9 @@ public class MainFrame extends JFrame implements ActionListener, View {
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
-					frame.setTitle("Convert File to Base64 v0.1");
+					frame.setTitle("Base64 Encode - Decode (" + VERSION_NUMBER +")");
 					frame.setResizable(false);
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,23 +55,23 @@ public class MainFrame extends JFrame implements ActionListener, View {
 	 */
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 546, 413);
+		setBounds(100, 100, 550, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel resultPanel = new JPanel();
-		resultPanel.setBounds(0, 138, 533, 238);
+		resultPanel.setBounds(0, 138, 530, 245);
 		contentPane.add(resultPanel);
 		resultPanel.setLayout(null);
 		
 		textArea = new JTextArea();
-		textArea.setBounds(0, 0, 533, 206);
+		textArea.setBounds(0, 0, 530, 206);
 		textArea.setLineWrap(true);
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setLocation(0, 0);
-		scrollPane.setSize(538, 205);
+		scrollPane.setSize(530, 205);
 		resultPanel.add(scrollPane);
 		
 		btn_clipboard = new JButton("Copy to Clipboard");
