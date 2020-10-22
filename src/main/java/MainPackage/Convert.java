@@ -26,8 +26,7 @@ public class Convert extends Thread{
 	
 	private void startConvertion(){
 		String base64="";
-	    try{
-	        InputStream iSteamReader = new FileInputStream(imageFile);
+	    try (InputStream iSteamReader = new FileInputStream(imageFile);){
 	        byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
 	        base64 = Base64.getEncoder().encodeToString(imageBytes);
 	        MainFrame.logger.info("Convert Result is: "+base64);
