@@ -6,15 +6,19 @@ import java.io.InputStream;
 import java.util.Base64;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
-public class Convert extends Thread{
+public class ConvertFile extends Thread{
+	
+	public static final Logger logger = LogManager.getLogger(ConvertFile.class);
 	
 	private File imageFile;
 	private String result;
 	private MainFrame mf;
 	private boolean imageForWeb;
 	
-	public Convert(File imageFile, boolean imageForWeb) {
+	public ConvertFile(File imageFile, boolean imageForWeb) {
 		this.imageFile = imageFile;
 		this.imageForWeb = imageForWeb;
 	}
@@ -29,7 +33,7 @@ public class Convert extends Thread{
 	    try (InputStream iSteamReader = new FileInputStream(imageFile);){
 	        byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
 	        base64 = Base64.getEncoder().encodeToString(imageBytes);
-	        MainFrame.logger.info("Convert Result is: "+base64);
+	        logger.info("Convert Result is: "+base64);
 	        this.result = base64;
 	        if(this.imageForWeb){
 	        	notify("data:image/png;base64,"+ this.result);
@@ -37,7 +41,7 @@ public class Convert extends Thread{
 	        	notify(this.result);
 	        }
 	    }catch(Exception e){
-	    	MainFrame.logger.error(e);
+	    	logger.error(e);
 	    }
 	}
 	
@@ -47,7 +51,7 @@ public class Convert extends Thread{
 	
 	public void notify(String result){
 		if(mf != null){
-			mf.updateResult(result);
+			mf.updateResult(result, TabIndex.File);
 		}
 	}
 }
