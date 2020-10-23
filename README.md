@@ -1,2 +1,4 @@
 # Base64EncodeDecode
- Tool to encode ans decode Base64
+ Tool to encode and decode Base64.
+ Decode files and text.
+ Encode text.
