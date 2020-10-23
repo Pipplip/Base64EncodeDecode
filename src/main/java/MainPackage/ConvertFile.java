@@ -36,7 +36,7 @@ public class ConvertFile extends Thread{
 	        logger.info("Convert Result is: "+base64);
 	        this.result = base64;
 	        if(this.imageForWeb){
-	        	notify("data:image/png;base64,"+ this.result);
+	        	notify("<img src=\"data:image/png;base64,"+ this.result+"\" alt=\"\" width=\"\" height=\"\">");
 	        }else{
 	        	notify(this.result);
 	        }

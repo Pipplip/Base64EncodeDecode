@@ -7,6 +7,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -24,10 +26,11 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import MainPackage.ConvertText.ConvertType;
+import javax.swing.JLabel;
 
 public class MainFrame extends JFrame implements ActionListener, View {
 	
-	private final static String VERSION_NUMBER = "v.0.2";
+	private final static String VERSION_NUMBER = "v.1.0.0";
 	
 	public static final Logger logger = LogManager.getLogger(MainFrame.class);
 	
@@ -62,7 +65,7 @@ public class MainFrame extends JFrame implements ActionListener, View {
 				
 				// basic log4j configurator  
 				BasicConfigurator.configure();  
-				String infoText = "Start Application: Base64 Encode - Decode (" + VERSION_NUMBER +")";
+				String infoText = "Base64 Encode/Decode (" + VERSION_NUMBER +")";
 				logger.info(infoText);
 				
 				try {
@@ -109,6 +112,12 @@ public class MainFrame extends JFrame implements ActionListener, View {
 		fileResultTextArea = new JTextArea();
 		fileResultTextArea.setBounds(0, 0, WIDTH, 206);
 		fileResultTextArea.setLineWrap(true);
+		fileResultTextArea.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mousePressed(MouseEvent e) {
+		    	fileResultTextArea.selectAll();
+		    }
+		});
 		JScrollPane scrollPane = new JScrollPane(fileResultTextArea);
 		scrollPane.setLocation(0, 0);
 		scrollPane.setSize(WIDTH, 205);
@@ -170,6 +179,10 @@ public class MainFrame extends JFrame implements ActionListener, View {
 		textConversionContentPane.add(outputTextPanel);
 		inputTextPanel.setLayout(null);
 		
+		JLabel lblOutput = new JLabel("Output:");
+		lblOutput.setBounds(3, 0, 85, 13);
+		outputTextPanel.add(lblOutput);
+		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBounds(0, 165, WIDTH, 40);
 		textConversionContentPane.add(buttonsPanel);
@@ -194,17 +207,28 @@ public class MainFrame extends JFrame implements ActionListener, View {
 		textInputTextArea.setBounds(0, 0, WIDTH, height);
 		textInputTextArea.setLineWrap(true);
 		JScrollPane scrollPaneInput = new JScrollPane(textInputTextArea);
-		scrollPaneInput.setLocation(0, 5);
-		scrollPaneInput.setSize(WIDTH, height);
+		scrollPaneInput.setLocation(0, 27);
+		scrollPaneInput.setSize(530, 130);
 		inputTextPanel.add(scrollPaneInput);
+		
+		JLabel lblInput = new JLabel("Input:");
+		lblInput.setBounds(3, 0, 85, 27);
+		inputTextPanel.add(lblInput);
 		outputTextPanel.setLayout(null);
 		
 		textOutputTextArea = new JTextArea();
 		textOutputTextArea.setBounds(0, 0, WIDTH, height);
 		textOutputTextArea.setLineWrap(true);
+		textOutputTextArea.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mousePressed(MouseEvent e) {
+		    	textOutputTextArea.selectAll();
+		    }
+		});
+		
 		JScrollPane scrollPaneOutput = new JScrollPane(textOutputTextArea);
-		scrollPaneOutput.setLocation(0, 5);
-		scrollPaneOutput.setSize(WIDTH, height);
+		scrollPaneOutput.setLocation(0, 15);
+		scrollPaneOutput.setSize(530, 139);
 		outputTextPanel.add(scrollPaneOutput);
 	}
 

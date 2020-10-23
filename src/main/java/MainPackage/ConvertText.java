@@ -44,6 +44,7 @@ public class ConvertText extends Thread{
 			logger.info("Text result: "+output);
 		} catch (Exception e) {
 			logger.error(e);
+			notify("Convertion Error!!!  "+e.getMessage());
 		}
 		
 	}
