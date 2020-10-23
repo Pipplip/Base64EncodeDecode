@@ -21,9 +21,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import MainPackage.ConvertText.ConvertType;
 import javax.swing.JLabel;
@@ -63,8 +62,6 @@ public class MainFrame extends JFrame implements ActionListener, View {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				
-				// basic log4j configurator  
-				BasicConfigurator.configure();  
 				String infoText = "Base64 Encode/Decode (" + VERSION_NUMBER +")";
 				logger.info(infoText);
 				
